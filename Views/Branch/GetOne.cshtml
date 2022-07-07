@@ -1,0 +1,24 @@
+﻿@{
+    ViewData["Title"] = "Branch Page";
+    Layout = "_CustomLayout";
+}
+@model Branch
+<section class="mt-4">
+<table class="table table-hover table-border mt-4">
+    <tr>
+        <td>Id</td>
+        <td>Name</td>
+        <td>Location</td>
+        <td>City</td>
+    </tr>
+    
+       
+    <tr>
+        <td>@Model.Id</td>
+        <td>@Model.Name</td>
+        <td>@Model.Location</td>
+        <td>@Model.City</td>
+    </tr>
+        
+</table>
+</section>

@@ -1,0 +1,34 @@
+﻿@model Branch
+@{
+    Layout = "_CustomLayout";
+}
+<section class="row container justify-content-between">
+    <div class="col-6 ms-5" >
+    <h2>Create New <span style="color:#4B49AC;font-weight:bold">Branch </span></h2>
+    <hr />
+    <form method="post" asp-action="Create">
+        <div>
+            <span asp-validation-for="Name" class="text-danger"></span>
+            <input asp-for="Name" class="form-control mt-4"placeholder="Name" />
+        </div>
+        <div>
+            <span asp-validation-for="Location" class="text-danger"></span>
+            <input asp-for="Location" class="form-control mt-4"placeholder="Location" />
+        </div>
+        <div>
+            <span asp-validation-for="City" class="text-danger"></span>
+            <input asp-for="City" class="form-control mt-4"placeholder="City" />
+        </div>
+       
+        <div>
+            <button type="submit" class="btn btn-primary mt-4" id="submit"><i class="bi bi-check"></i> Create New</button> 
+            <a asp-action="Index" asp-controller="Branch" class="btn btn-outline-secondary mt-4"><i class="bi bi-x"></i> Cancel</a>
+        </div>
+    </form>
+    </div>
+</section>
+@section Scripts{
+    <!--JQuery-->
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}
