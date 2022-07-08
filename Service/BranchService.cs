@@ -12,7 +12,7 @@ namespace BookingHotel_MVC.Service
         }
         public List<Branch> GetAll()
         {
-            httpClient.BaseAddress = new Uri("https://localhost:7212/");
+            httpClient.BaseAddress = new Uri(baseUrl);
             httpClient.DefaultRequestHeaders.Accept.Add(
                 new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
             HttpResponseMessage httpResponse = httpClient.GetAsync("api/Branch").Result;
@@ -22,7 +22,7 @@ namespace BookingHotel_MVC.Service
 
         public Branch GetById(int id)
         {
-            httpClient.BaseAddress = new Uri("https://localhost:7212/");
+            httpClient.BaseAddress = new Uri(baseUrl);
             httpClient.DefaultRequestHeaders.Accept.Add(
                 new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
             HttpResponseMessage httpResponse = httpClient.GetAsync("api/Branch/" + id).Result;
@@ -32,7 +32,7 @@ namespace BookingHotel_MVC.Service
 
         public int Insert(Branch item)
         {
-            httpClient.BaseAddress = new Uri("https://localhost:7212/");
+            httpClient.BaseAddress = new Uri(baseUrl);
             httpClient.DefaultRequestHeaders.Accept.Add(
                 new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
             httpClient.PostAsJsonAsync<Branch>("api/Branch", item);
@@ -41,7 +41,7 @@ namespace BookingHotel_MVC.Service
 
         public int Update(int id, Branch item)
         {
-            httpClient.BaseAddress = new Uri("https://localhost:7212/");
+            httpClient.BaseAddress = new Uri(baseUrl);
             httpClient.DefaultRequestHeaders.Accept.Add(
                 new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
             httpClient.PostAsJsonAsync<Branch>("api/Branch", item);

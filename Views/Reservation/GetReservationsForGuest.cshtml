@@ -1,0 +1,39 @@
+﻿@model List<Reservation>
+@{
+    ViewData["Title"] = "Booking";
+    Layout = "_CustomLayout";
+}   
+<Section>
+<div class="container" >
+    <h1>Booking</h1>
+    @if(!Model.Any())
+    {
+        <div class="alert alert-danger" role="alert">
+        <i class="bi bi-radioactive"></i> No branch found !
+        </div>
+    }
+        else
+    {
+        @foreach (var item in @Model)
+        {
+          <div class="card" style="width:380px;display:inline-block;margin:6px">
+            <img class="card-img-top" src="https://th.bing.com/th/id/OIP.Pe4slExiUbZiMizzcLIhQwHaE2?pid=ImgDet&w=640&h=419&rs=1" alt="Card image" style="width:100%">
+            <div class="card-body">
+              <h4 class="card-title">@item.TotalPrice</h4>
+              <h4 class="card-title">@item.Status</h4>
+              <h4 class="card-title">@item.Date</h4>
+              @foreach (var roomreservation in @item.ReservationRooms)
+              {
+                        <h4 class="card-title">@roomreservation.Room.Room_Type</h4>
+                        <h4 class="card-title">@roomreservation.Room.Price</h4>
+              }
+              <p class="card-text">Some example text some example text. John Doe is an architect and engineer</p>
+              <a href="#" class="btn btn-primary">See Products</a>
+            </div>
+          </div>
+         }
+    }
+        
+</div>
+</Section>
+

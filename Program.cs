@@ -5,7 +5,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddScoped<IServiceBranch, BranchService>();
+builder.Services.AddScoped<IServiceBranch,BranchService>();
+builder.Services.AddScoped<IServiceRoom,RoomService>();
+builder.Services.AddScoped<IServiceReservation,ReservationService>();
+builder.Services.AddScoped<IServiceAccount,AccountService>();
+
 var app = builder.Build();
 
 
@@ -21,11 +25,11 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Branch}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();

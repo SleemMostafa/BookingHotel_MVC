@@ -2,7 +2,7 @@
 
 namespace BookingHotel_MVC.Models
 {
-    public class ReservationRoomDto
+    public class ReservationRoomModel
     {
         public int Room_Id { get; set; }
         [DataType(DataType.Date), Required]

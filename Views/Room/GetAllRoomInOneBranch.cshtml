@@ -1,0 +1,72 @@
+﻿@model List<Room>
+@{
+    ViewData["Title"] = "Room Page";
+    Layout = "_CustomLayout";
+}
+<div class="mt-4">
+    <div style="position:fixed;z-index:2">      
+            <div class="alert alert-success alert-dismissable" id="SucessAlert" style="display:none;">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                Success! Product Added successfully.
+            </div>
+            <div class="alert alert-danger alert-dismissable" id="FailedAlert" style="display:none;">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                Failed ! Product Already Exists .
+            </div>
+    </div>
+</div>
+<section class="mt-4 container">
+    @if(!Model.Any())
+    {
+        <div class="alert alert-danger" role="alert">
+        <i class="bi bi-radioactive"></i> No rooms found !
+        </div>
+    }
+    else{
+        @foreach (var item in @Model)
+        {
+            <div class="card mt-4" style="width: 17rem;display:inline-block;">
+                <div class="card-body">
+                    <h5 class="card-title text-center">@item.Branch.Name</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">@item.Price$</h6>
+                    <h6 class="card-subtitle mb-2 text-muted">@item.Status</h6>
+                    <h6 class="card-subtitle mb-2 text-muted">Type: @item.Room_Type.TypeRoom</h6>
+                    <h6 class="card-subtitle mb-2 text-muted">Capacity: @item.Room_Type.Capacity</h6>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <a onclick="MakeReservation(@item.Id)" asp-controller="Reservation" class="card-link btn btn-primary">Make Book</a>
+                    <a asp-controller="Branch" asp-action="index" class="card-link btn btn-primary">Branches</a>
+                </div>
+            </div>
+        }
+    }
+</section>
+
+@section Scripts{
+    <script>
+        var test = "Test"
+        function MakeReservation(roomId)
+        {
+           console.log(test);
+            var id = parseInt(roomId); 
+      $.ajax({
+        url: "/Reservation/AddReservation",
+        data:{"id":id},
+        success: function(result)
+        {
+            if(result==true)
+            {
+                $("#SucessAlert").show();
+                $("#FailedAlert").hide();
+
+            }
+            else
+            {
+                $("#SucessAlert").hide();
+                $("#FailedAlert").show();
+            }
+            console.log(result);
+        }
+        });
+        }
+    </script>
+}
