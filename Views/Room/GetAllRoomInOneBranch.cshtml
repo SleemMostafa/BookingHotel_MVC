@@ -33,7 +33,7 @@
                     <h6 class="card-subtitle mb-2 text-muted">Type: @item.Room_Type.TypeRoom</h6>
                     <h6 class="card-subtitle mb-2 text-muted">Capacity: @item.Room_Type.Capacity</h6>
                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a onclick="MakeReservation(@item.Id)" asp-controller="Reservation" class="card-link btn btn-primary">Make Book</a>
+                    <a asp-controller="Reservation" asp-action="SetRoomInfo" asp-route-roomId=@item.Id class="card-link btn btn-primary">Make Book</a>
                     <a asp-controller="Branch" asp-action="index" class="card-link btn btn-primary">Branches</a>
                 </div>
             </div>

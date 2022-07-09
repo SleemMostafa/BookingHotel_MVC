@@ -1,0 +1,29 @@
+﻿@model List<Room>
+@{
+    ViewData["Title"] = "Room Page";
+    Layout = "_CustomLayout";
+}
+<section class="mt-4 container">
+    @if(!Model.Any())
+    {
+        <div class="alert alert-danger" role="alert">
+        <i class="bi bi-radioactive"></i> No rooms found !
+        </div>
+    }
+    else
+    {
+        @foreach (var item in @Model)
+        {
+            <div class="card mt-4" style="width: 17rem;display:inline-block;">
+                <div class="card-body">
+                    <h5 class="card-title text-center">@item.Branch.Name</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">@item.Price$</h6>
+                    <h6 class="card-subtitle mb-2 text-muted">@item.Status</h6>
+                    <h6 class="card-subtitle mb-2 text-muted">Type: @item.Room_Type.TypeRoom</h6>
+                    <h6 class="card-subtitle mb-2 text-muted">Capacity: @item.Room_Type.Capacity</h6>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+            </div>
+    }
+    }
+</section>

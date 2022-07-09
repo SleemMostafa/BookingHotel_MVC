@@ -1,4 +1,5 @@
-﻿using BookingHotel_MVC.Models;
+﻿using BookingHotel_MVC.Helper;
+using BookingHotel_MVC.Models;
 using BookingHotel_MVC.Service;
 using BookingHotel_MVC.ViewModel;
 using Microsoft.AspNetCore.Mvc;
@@ -26,6 +27,7 @@ namespace BookingHotel_MVC.Controllers
                 if (response.IsAuthenticated)
                 {
                     Response.Cookies.Append("token", response.Token);
+                    Response.Cookies.Append("userId", response.Id);
                     return RedirectToAction("Index","Branch");
                 }
                 return View(response);
@@ -45,7 +47,10 @@ namespace BookingHotel_MVC.Controllers
                 ResponseAuth response = await accountService.Login(model);
                 if (response.IsAuthenticated)
                 {
-                    Response.Cookies.Append("token", response.Token);
+                    CookieOptions cookieOptions = new CookieOptions();
+                    cookieOptions.Expires = DateTimeOffset.Now.AddMonths(1);
+                    Response.Cookies.Append("token", response.Token,cookieOptions);
+                    Response.Cookies.Append("userId", response.Id);
                     return RedirectToAction("Index", "Branch");
                 }
                 return View(response);

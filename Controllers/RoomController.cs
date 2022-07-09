@@ -11,6 +11,16 @@ namespace BookingHotel_MVC.Controllers
         {
             this.serviceRoom = serviceRoom;
         }
+        public IActionResult GetAllForReport()
+        {
+            var data = serviceRoom.GetAllForReport();
+            if(data == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+            
+            return View();
+        }
         public IActionResult Index()
         {
             return View(serviceRoom.GetAll());

@@ -9,7 +9,6 @@ builder.Services.AddScoped<IServiceBranch,BranchService>();
 builder.Services.AddScoped<IServiceRoom,RoomService>();
 builder.Services.AddScoped<IServiceReservation,ReservationService>();
 builder.Services.AddScoped<IServiceAccount,AccountService>();
-
 var app = builder.Build();
 
 
@@ -27,7 +26,6 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");

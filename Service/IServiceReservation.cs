@@ -5,6 +5,7 @@ namespace BookingHotel_MVC.Service
     public interface IServiceReservation
     {
         List<Reservation> GetReservationsForGuest(string guestId);
+        ReservationRoomModel AddTempRoom(ReservationRoomModel model);
 
     }
 }

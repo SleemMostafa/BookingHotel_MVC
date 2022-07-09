@@ -17,16 +17,23 @@ namespace BookingHotel_MVC.Controllers
         {
             return View();
         }
-        //public IActionResult AddReservation(int id)
-        //{
-        //    string userId = "";
-        //    Room room = serviceRoom.GetById(id);
-        //    if (room != null)
-        //    {
-        //        userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-        //    }
-
-        //}
+        public IActionResult SetRoomInfo(int roomId)
+        {
+            ViewBag.RoomId = roomId;
+            return View();
+        }
+        public IActionResult AddReservation(ReservationRoomModel model)
+        {
+            string userId = Request.Cookies["userId"];
+            model.GuestId = userId;
+            model.NumberOfDays = model.DateIn.Day - model.DateOut.Day ;
+            if (ModelState.IsValid)
+            {
+                var data =  serviceReservation.AddTempRoom(model);
+                return  RedirectToAction("Index","Branch");
+            }
+            return BadRequest();
+        }
         [HttpGet]
         public IActionResult GetReservationsForGuest()
         {

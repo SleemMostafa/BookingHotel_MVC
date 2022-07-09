@@ -1,16 +1,15 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace BookingHotel_MVC.Models
+namespace BookingHotel_MVC.ViewModel
 {
-    public class ReservationRoomModel
+    public class RoomInfoFromGuest
     {
-        public string? GuestId { get; set; }
-        public int? Room_Id { get; set; }
+        public int Room_Id { get; set; }
+
         [DataType(DataType.Date), Required]
         public DateTime DateIn { get; set; }
         [DataType(DataType.Date), Required]
         public DateTime DateOut { get; set; }
-        public int? NumberOfDays { get; set; }
-
+        public int NumberOfDays { get { return DateOut.Day - DateIn.Day; } set { } }
     }
 }

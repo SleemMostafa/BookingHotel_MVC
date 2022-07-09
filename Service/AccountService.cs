@@ -31,12 +31,15 @@ namespace BookingHotel_MVC.Service
             if (model != null)
             {
                 httpClient.BaseAddress = new Uri(baseUrl);
+                //string token =  ;
+
                 httpClient.DefaultRequestHeaders.Accept.Add(
                     new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
                 HttpResponseMessage httpResponse = await httpClient.PostAsJsonAsync<Register>("api/Auth/Register", model);
                 httpClient.DefaultRequestHeaders.Authorization
                         = new AuthenticationHeaderValue("Bearer");
                 ResponseAuth response = httpResponse.Content.ReadAsAsync<ResponseAuth>().Result;
+
 
                 return response;
             }

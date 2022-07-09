@@ -10,6 +10,20 @@ namespace BookingHotel_MVC.Service
         {
             throw new NotImplementedException();
         }
+        public List<Room> GetAllForReport()
+        {
+            httpClient.BaseAddress = new Uri(baseUrl);
+            httpClient.DefaultRequestHeaders.Accept.Add(
+                new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+            HttpResponseMessage httpResponse = httpClient.GetAsync("api/Room/GetAll").Result;
+            List<Room> rooms = httpResponse.Content.ReadAsAsync<List<Room>>().Result;
+            if (httpResponse.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+            {
+                return null;
+            }
+
+            return rooms;
+        }
 
         public List<Room> GetAll()
         {

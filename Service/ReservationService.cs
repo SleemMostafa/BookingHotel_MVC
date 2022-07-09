@@ -15,5 +15,14 @@ namespace BookingHotel_MVC.Service
             List<Reservation> reservations = httpResponse.Content.ReadAsAsync<List<Reservation>>().Result;
             return reservations;
         }
+        public ReservationRoomModel AddTempRoom(ReservationRoomModel  model)
+        {
+            httpClient.BaseAddress = new Uri(baseUrl);
+            httpClient.DefaultRequestHeaders.Accept.Add(
+                new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+            HttpResponseMessage httpResponse = httpClient.PostAsJsonAsync<ReservationRoomModel>("api/TempGuestRoom", model).Result;
+            ReservationRoomModel tempGuestRoom = httpResponse.Content.ReadAsAsync<ReservationRoomModel>().Result;
+            return tempGuestRoom;
+        }
     }
 }
