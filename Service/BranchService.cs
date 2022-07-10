@@ -47,5 +47,9 @@ namespace BookingHotel_MVC.Service
             httpClient.PostAsJsonAsync<Branch>("api/Branch", item);
             return 1;
         }
+        public void SendToken(string token)
+        {
+
+        }
     }
 }

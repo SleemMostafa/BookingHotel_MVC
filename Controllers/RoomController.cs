@@ -13,7 +13,9 @@ namespace BookingHotel_MVC.Controllers
         }
         public IActionResult GetAllForReport()
         {
-            var data = serviceRoom.GetAllForReport();
+            string token  = Request.Cookies["token"];
+
+            var data = serviceRoom.GetAllForReport(token);
             if(data == null)
             {
                 return RedirectToAction("Login", "Account");
