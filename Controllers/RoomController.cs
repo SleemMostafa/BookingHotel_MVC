@@ -21,7 +21,7 @@ namespace BookingHotel_MVC.Controllers
                 return RedirectToAction("Login", "Account");
             }
             
-            return View();
+            return View(data);
         }
         public IActionResult Index()
         {
