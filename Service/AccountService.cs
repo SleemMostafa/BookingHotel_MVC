@@ -36,11 +36,7 @@ namespace BookingHotel_MVC.Service
                 httpClient.DefaultRequestHeaders.Accept.Add(
                     new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
                 HttpResponseMessage httpResponse = await httpClient.PostAsJsonAsync<Register>("api/Auth/Register", model);
-                httpClient.DefaultRequestHeaders.Authorization
-                        = new AuthenticationHeaderValue("Bearer");
                 ResponseAuth response = httpResponse.Content.ReadAsAsync<ResponseAuth>().Result;
-
-
                 return response;
             }
             return new ResponseAuth { Message = "Error",IsAuthenticated=false};

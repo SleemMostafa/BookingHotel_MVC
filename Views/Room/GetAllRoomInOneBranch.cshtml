@@ -3,7 +3,8 @@
     ViewData["Title"] = "Room Page";
     Layout = "_CustomLayout";
 }
-<div class="mt-4">
+<section>
+<div >
     <div style="position:fixed;z-index:2">      
             <div class="alert alert-success alert-dismissable" id="SucessAlert" style="display:none;">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -11,10 +12,11 @@
             </div>
             <div class="alert alert-danger alert-dismissable" id="FailedAlert" style="display:none;">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                Failed ! Product Already Exists .
+                Failed ! Room Already Exists .
             </div>
     </div>
 </div>
+</section>
 <section class="mt-4 container">
     @if(!Model.Any())
     {
@@ -33,7 +35,8 @@
                     <h6 class="card-subtitle mb-2 text-muted">Type: @item.Room_Type.TypeRoom</h6>
                     <h6 class="card-subtitle mb-2 text-muted">Capacity: @item.Room_Type.Capacity</h6>
                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a asp-controller="Reservation" asp-action="SetRoomInfo" asp-route-roomId=@item.Id class="card-link btn btn-primary">Make Book</a>
+@*                    <a asp-controller="Reservation" asp-action="SetRoomInfo" asp-route-roomId=@item.Id asp-route-BranchId=@item.Branch.Id class="card-link btn btn-primary">Make Book</a>
+*@                    <button  onclick="MakeReservation(@item.Id,@item.Branch.Id)" class="card-link btn btn-primary">Make Book</button>
                     <a asp-controller="Branch" asp-action="index" class="card-link btn btn-primary">Branches</a>
                 </div>
             </div>
@@ -43,28 +46,28 @@
 
 @section Scripts{
     <script>
-        var test = "Test"
-        function MakeReservation(roomId)
+        function MakeReservation(roomId,branchId)
         {
-           console.log(test);
-            var id = parseInt(roomId); 
+            var roomID = parseInt(roomId); 
+            var banchID = parseInt(branchId); 
       $.ajax({
-        url: "/Reservation/AddReservation",
-        data:{"id":id},
+        url: "/Reservation/SetRoomInfo",
+        data:{"roomId":roomID,"branchId":banchID},
         success: function(result)
         {
-            if(result==true)
+            if(!result)
             {
-                $("#SucessAlert").show();
-                $("#FailedAlert").hide();
-
+                window.location = "@Url.Action("OpenFormRoomInfo", "Reservation")";
             }
-            else
+            else if(result)
             {
                 $("#SucessAlert").hide();
                 $("#FailedAlert").show();
             }
-            console.log(result);
+            else if(result == "UnAuth")
+            {
+                window.location = "@Url.Action("Login", "Account")";
+            }
         }
         });
         }

@@ -24,5 +24,15 @@ namespace BookingHotel_MVC.Service
             ReservationRoomModel tempGuestRoom = httpResponse.Content.ReadAsAsync<ReservationRoomModel>().Result;
             return tempGuestRoom;
         }
+        public bool CheckIfTempRoomExit(int roomId, string guestId)
+        {
+            httpClient.BaseAddress = new Uri(baseUrl);
+            httpClient.DefaultRequestHeaders.Accept.Add(
+                new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+            HttpResponseMessage httpResponse = httpClient.GetAsync("api/TempGuestRoom?roomId="+roomId+"&"+"guestId="+guestId).Result;
+            bool roomIsExist = httpResponse.Content.ReadAsAsync<bool>().Result;
+            return roomIsExist;
+        }
+
     }
 }

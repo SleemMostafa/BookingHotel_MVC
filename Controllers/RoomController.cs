@@ -30,6 +30,7 @@ namespace BookingHotel_MVC.Controllers
 
         [HttpGet]
         public IActionResult GetAllRoomInOneBranch(int branchId)
+        
         {
             var rooms = serviceRoom.GetRoomsByBranchId(branchId);
             if(rooms != null)

@@ -17,11 +17,30 @@ namespace BookingHotel_MVC.Controllers
         {
             return View();
         }
-        public IActionResult SetRoomInfo(int roomId)
+        public IActionResult SetRoomInfo(int roomId,int branchId)
         {
-            ViewBag.RoomId = roomId;
+            TempData["RoomId"] = roomId;
+            TempData["BranchId"] = roomId;
+            string userId = Request.Cookies["userId"];
+            if (userId != null)
+            {
+                if (!serviceReservation.CheckIfTempRoomExit(roomId, userId))
+                {
+                    return Json(false);
+                }
+                return Json(true);
+            }
+
+                return Json("UnAuth");
+        }
+        public IActionResult OpenFormRoomInfo()
+        {
+            string userId = Request.Cookies["userId"];
+            ViewBag.RoomId = int.Parse(TempData["RoomId"].ToString());
+            ViewBag.BranchId = int.Parse(TempData["BranchId"].ToString());
             return View();
         }
+
         public IActionResult AddReservation(ReservationRoomModel model)
         {
             string userId = Request.Cookies["userId"];
@@ -30,7 +49,10 @@ namespace BookingHotel_MVC.Controllers
             if (ModelState.IsValid)
             {
                 var data =  serviceReservation.AddTempRoom(model);
-                return  RedirectToAction("Index","Branch");
+                if (data != null)
+                {
+                    return RedirectToAction("GetAllRoomInOneBranch", "Room", new { branchId = model.BranchId });
+                }
             }
             return BadRequest();
         }

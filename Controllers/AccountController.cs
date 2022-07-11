@@ -36,7 +36,6 @@ namespace BookingHotel_MVC.Controllers
         }
         public async Task<IActionResult> Login()
         {
-
             return View();
         }
         [HttpPost]
