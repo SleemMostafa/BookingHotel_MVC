@@ -1,5 +1,6 @@
 ﻿using BookingHotel_MVC.Models;
 using BookingHotel_MVC.Service;
+using BookingHotel_MVC.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
@@ -20,7 +21,7 @@ namespace BookingHotel_MVC.Controllers
         public IActionResult SetRoomInfo(int roomId,int branchId)
         {
             TempData["RoomId"] = roomId;
-            TempData["BranchId"] = roomId;
+            TempData["BranchId"] = branchId;
             string userId = Request.Cookies["userId"];
             if (userId != null)
             {
@@ -41,11 +42,11 @@ namespace BookingHotel_MVC.Controllers
             return View();
         }
 
-        public IActionResult AddReservation(ReservationRoomModel model)
+        public IActionResult AddReservationInTempGuest(ReservationRoomModel model)
         {
             string userId = Request.Cookies["userId"];
             model.GuestId = userId;
-            model.NumberOfDays = model.DateIn.Day - model.DateOut.Day ;
+            model.NumberOfDays =  model.DateOut.Day - model.DateIn.Day;
             if (ModelState.IsValid)
             {
                 var data =  serviceReservation.AddTempRoom(model);
@@ -56,6 +57,36 @@ namespace BookingHotel_MVC.Controllers
             }
             return BadRequest();
         }
+        [HttpGet]
+        public IActionResult AddReservation()
+        {
+            string guestId = Request.Cookies["userId"];
+            if (guestId != null)
+            {
+                var data = serviceReservation.GetAllTempForGuest(guestId);
+
+                ReservationModel newReservation = new ReservationModel();
+                newReservation.Guest_Id = guestId;
+                foreach (var item in data)
+                {
+                    newReservation.ReservationRoomInfo.Add(item);
+                }
+                Reservation response = serviceReservation.AddReservation(newReservation);
+                if (response.Status)
+                {
+                    return View(data);
+                }
+                else
+                {
+                    return RedirectToAction("GetReservationsForGuest", "Reservation");
+                }
+            }
+            return RedirectToAction("Login", "Account");
+
+
+        }
+
+
         [HttpGet]
         public IActionResult GetReservationsForGuest()
         {

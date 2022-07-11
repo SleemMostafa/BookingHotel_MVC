@@ -1,4 +1,5 @@
 ﻿using BookingHotel_MVC.Models;
+using BookingHotel_MVC.ViewModel;
 
 namespace BookingHotel_MVC.Service
 {
@@ -41,6 +42,14 @@ namespace BookingHotel_MVC.Service
             HttpResponseMessage httpResponse = httpClient.GetAsync("api/TempGuestRoom?roomId="+roomId+"&"+"guestId="+guestId).Result;
             bool roomIsExist = httpResponse.Content.ReadAsAsync<bool>().Result;
             return roomIsExist;
+        }
+        public Reservation AddReservation(ReservationModel model)
+        {
+            httpClient.DefaultRequestHeaders.Accept.Add(
+                new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+            HttpResponseMessage httpResponse = httpClient.PostAsJsonAsync<ReservationModel>("api/Reservation", model).Result;
+            Reservation response = httpResponse.Content.ReadAsAsync<Reservation>().Result;
+            return response;
         }
 
     }
