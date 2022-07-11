@@ -59,9 +59,20 @@ namespace BookingHotel_MVC.Controllers
         [HttpGet]
         public IActionResult GetReservationsForGuest()
         {
-            var guestId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var data = serviceReservation.GetReservationsForGuest("3f73164a-2ccb-4e5c-a5a4-abe8c836ef47");
+            string guestId = Request.Cookies["userId"];
+            var data = serviceReservation.GetReservationsForGuest(guestId);
             if(data != null)
+            {
+                return View(data);
+            }
+            return BadRequest();
+        }
+        [HttpGet]
+        public IActionResult GetAllTempGuest()
+        {
+            string guestId = Request.Cookies["userId"];
+            var data = serviceReservation.GetAllTempForGuest(guestId);
+            if (data != null)
             {
                 return View(data);
             }

@@ -15,6 +15,15 @@ namespace BookingHotel_MVC.Service
             List<Reservation> reservations = httpResponse.Content.ReadAsAsync<List<Reservation>>().Result;
             return reservations;
         }
+        public List<ReservationRoomModel> GetAllTempForGuest(string guestId)
+        {
+            httpClient.BaseAddress = new Uri(baseUrl);
+            httpClient.DefaultRequestHeaders.Accept.Add(
+                new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+            HttpResponseMessage httpResponse = httpClient.GetAsync($"api/TempGuestRoom/GetAllTempByGuestId?guestId={guestId}").Result;
+            List<ReservationRoomModel> tempReservations = httpResponse.Content.ReadAsAsync<List<ReservationRoomModel>>().Result;
+            return tempReservations;
+        }
         public ReservationRoomModel AddTempRoom(ReservationRoomModel  model)
         {
             httpClient.BaseAddress = new Uri(baseUrl);
