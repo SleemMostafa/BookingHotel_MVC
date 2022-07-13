@@ -79,7 +79,6 @@ namespace BookingHotel_MVC.Service
             httpClient.BaseAddress = new Uri(baseUrl);
             httpClient.DefaultRequestHeaders.Accept.Add(
                 new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-
             HttpResponseMessage httpResponse = httpClient.PutAsJsonAsync("api/TempGuestRoom?id=" + id, model).Result;
             int response = httpResponse.Content.ReadAsAsync<int>().Result;
             return response;
@@ -93,6 +92,24 @@ namespace BookingHotel_MVC.Service
             HttpResponseMessage httpResponse = httpClient.DeleteAsync("api/TempGuestRoom/DeleteTempRoomByID?id=" + id).Result;
             StatusResponse response = httpResponse.Content.ReadAsAsync<StatusResponse>().Result;
             return response;        
+        }
+        public List<Reservation> GetAllReservationNotConfirmed()
+        {
+            httpClient.BaseAddress = new Uri(baseUrl);
+            httpClient.DefaultRequestHeaders.Accept.Add(
+                new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+            HttpResponseMessage httpResponse = httpClient.GetAsync("api/Reservation/GetAllReservationNotConfirmed").Result;
+            List<Reservation> response = httpResponse.Content.ReadAsAsync<List<Reservation>>().Result;
+            return response;
+        }
+        public StatusResponse ConfirmRservationForAdmin(int id)
+        {
+            httpClient.BaseAddress = new Uri(baseUrl);
+            httpClient.DefaultRequestHeaders.Accept.Add(
+                new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+            HttpResponseMessage httpResponse = httpClient.GetAsync("api/Reservation/ConfirmReservation/"+id).Result;
+            StatusResponse response = httpResponse.Content.ReadAsAsync<StatusResponse>().Result;
+            return response;
         }
     }
 }

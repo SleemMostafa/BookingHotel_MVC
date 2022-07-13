@@ -60,8 +60,6 @@ namespace BookingHotel_MVC.Controllers
             ViewBag.BranchId = int.Parse(TempData["BranchId"].ToString());
             return View();
         }
-
-
         public IActionResult AddReservationInTempGuest(ReservationRoomModel model)
         {
             string userId = Request.Cookies["userId"];
@@ -104,8 +102,6 @@ namespace BookingHotel_MVC.Controllers
             return RedirectToAction("Login", "Account");
 
         }
-
-
         [HttpGet]
         public IActionResult GetReservationsForGuest()
         {
@@ -123,8 +119,6 @@ namespace BookingHotel_MVC.Controllers
             string guestId = Request.Cookies["userId"];
             if (guestId != null)
             {
-
-
                 var data = serviceReservation.GetAllTempForGuest(guestId);
                 if (data != null)
                 {
@@ -143,5 +137,24 @@ namespace BookingHotel_MVC.Controllers
             }
             return Json(data);
         }
+        public IActionResult GetAllReservationNotConfirmed()
+        {
+            var data = serviceReservation.GetAllReservationNotConfirmed();
+            if(data != null)
+            {
+                return View(data);
+            }
+            return BadRequest();
+        }
+        public IActionResult ConfirmReservationForAdmin(int reservationId)
+        {
+            var data = serviceReservation.ConfirmRservationForAdmin(reservationId);
+            if(data.Status)
+            {
+                return Json(data);
+            }
+            return Json(data);
+        }
+
     }
 }

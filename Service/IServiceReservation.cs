@@ -11,8 +11,10 @@ namespace BookingHotel_MVC.Service
         List<ReservationRoomModel> GetAllTempForGuest(string guestId);
         Reservation AddReservation(ReservationModel model);
         bool DeleteTempRoomForGuest(string id);
+        List<Reservation> GetAllReservationNotConfirmed();
         int EditTempRoom(int id, ReservationRoomModel reservationRoomModel);
         ReservationRoomModel GetTempRoomByID(int id);
         StatusResponse DeleteFromTempGuest(int id);
+        StatusResponse ConfirmRservationForAdmin(int id);
     }
 }
