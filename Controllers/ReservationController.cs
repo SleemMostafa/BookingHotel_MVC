@@ -10,7 +10,7 @@ namespace BookingHotel_MVC.Controllers
     {
         private readonly IServiceReservation serviceReservation;
 
-        public ReservationController(IServiceReservation  serviceReservation)
+        public ReservationController(IServiceReservation serviceReservation)
         {
             this.serviceReservation = serviceReservation;
         }
@@ -18,7 +18,26 @@ namespace BookingHotel_MVC.Controllers
         {
             return View();
         }
-        public IActionResult SetRoomInfo(int roomId,int branchId)
+        public IActionResult OpenEditReservation(int id)
+        {
+            var data = serviceReservation.GetTempRoomByID(id);
+            return View(data);
+        }
+        public IActionResult EditReservation(int id, ReservationRoomModel reservationRoomModel)
+        {
+            var response = serviceReservation.EditTempRoom(id, reservationRoomModel);
+            if (response > 0)
+            {
+                return RedirectToAction("GetAllTempGuest");
+            }
+            else
+            {
+                var data = serviceReservation.GetTempRoomByID(id);
+
+                return View("OpenEditReservation", data);
+            }
+        }
+        public IActionResult SetRoomInfo(int roomId, int branchId)
         {
             TempData["RoomId"] = roomId;
             TempData["BranchId"] = branchId;
@@ -32,7 +51,7 @@ namespace BookingHotel_MVC.Controllers
                 return Json(true);
             }
 
-                return Json("UnAuth");
+            return Json("UnAuth");
         }
         public IActionResult OpenFormRoomInfo()
         {
@@ -42,14 +61,15 @@ namespace BookingHotel_MVC.Controllers
             return View();
         }
 
+
         public IActionResult AddReservationInTempGuest(ReservationRoomModel model)
         {
             string userId = Request.Cookies["userId"];
             model.GuestId = userId;
-            model.NumberOfDays =  model.DateOut.Day - model.DateIn.Day;
+            model.NumberOfDays = model.DateOut.Day - model.DateIn.Day;
             if (ModelState.IsValid)
             {
-                var data =  serviceReservation.AddTempRoom(model);
+                var data = serviceReservation.AddTempRoom(model);
                 if (data != null)
                 {
                     return RedirectToAction("GetAllRoomInOneBranch", "Room", new { branchId = model.BranchId });
@@ -83,7 +103,6 @@ namespace BookingHotel_MVC.Controllers
             }
             return RedirectToAction("Login", "Account");
 
-
         }
 
 
@@ -92,7 +111,7 @@ namespace BookingHotel_MVC.Controllers
         {
             string guestId = Request.Cookies["userId"];
             var data = serviceReservation.GetReservationsForGuest(guestId);
-            if(data != null)
+            if (data != null)
             {
                 return View(data);
             }

@@ -16,19 +16,24 @@
     {
         @foreach (var item in @Model)
         {
-          <div class="card" style="width:380px;display:inline-block;margin:6px">
+          <div class="card col-4 mt-4" style="display:inline-block">
             <img class="card-img-top" src="https://th.bing.com/th/id/OIP.Pe4slExiUbZiMizzcLIhQwHaE2?pid=ImgDet&w=640&h=419&rs=1" alt="Card image" style="width:100%">
             <div class="card-body">
               <h4 class="card-title">@item.DateIn</h4>
               <h4 class="card-title">@item.DateOut</h4>
               <h4 class="card-title">@item.NumberOfDays</h4>
               <p class="card-text">Some example text some example text. John Doe is an architect and engineer</p>
+
+               <div class="mt-4">
+               <a asp-action="OpenEditReservation" asp-controller="Reservation" class="btn btn-danger">Delete</a>
+               <a asp-action="OpenEditReservation" asp-controller="Reservation" asp-route-id=@item.Id class="btn btn-primary">Edit</a>
+              </div>
             </div>
           </div>
          }
     }
     <div class="mt-4">
-        <a asp-action="AddReservation" asp-controller="Reservation" class="btn btn-primary">Confirm</a>
+        <a asp-action="AddReservation" asp-controller="Reservation" class="btn btn-primary">Confirm Book</a>
     </div>
 </div>
 </Section>

@@ -4,6 +4,7 @@ namespace BookingHotel_MVC.Models
 {
     public class ReservationRoomModel
     {
+        public int? Id { get; set; }
         public string? GuestId { get; set; }
         public int? BranchId { get; set; }
         public int? RoomId { get; set; }

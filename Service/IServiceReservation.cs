@@ -10,5 +10,8 @@ namespace BookingHotel_MVC.Service
         bool CheckIfTempRoomExit(int roomId, string guestId);
         List<ReservationRoomModel> GetAllTempForGuest(string guestId);
         Reservation AddReservation(ReservationModel model);
+        bool DeleteTempRoomForGuest(string id);
+        int EditTempRoom(int id, ReservationRoomModel reservationRoomModel);
+        ReservationRoomModel GetTempRoomByID(int id);
     }
 }
