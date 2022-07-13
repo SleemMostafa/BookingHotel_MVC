@@ -25,8 +25,8 @@
               <p class="card-text">Some example text some example text. John Doe is an architect and engineer</p>
 
                <div class="mt-4">
-               <a asp-action="OpenEditReservation" asp-controller="Reservation" class="btn btn-danger">Delete</a>
-               <a asp-action="OpenEditReservation" asp-controller="Reservation" asp-route-id=@item.Id class="btn btn-primary">Edit</a>
+                <a  href="javascript:;" class="btn btn-danger js-delete" data-id="@item.Id"><i class="bi bi-trash"></i> Delete</a>              
+                <a asp-action="OpenEditReservation" asp-controller="Reservation" asp-route-id=@item.Id class="btn btn-secondary">Edit</a>
               </div>
             </div>
           </div>
@@ -37,4 +37,24 @@
     </div>
 </div>
 </Section>
+@section Scripts{
+         <script>
+         $(document).ready(function(){
+             $(".js-delete").on("click",function(){
+                 var btn = $(this);
+                 var result = confirm("Are You Sure Delete This Category ?");
+                 if(result)
+                 {
+                     $.ajax({
+                         url:"/Reservation/DeleteTempGuestRoom/" + btn.data("id"),
+                         success: function(){
+                             btn.parents(".card").fadeOut();
+                         },
+                     });
+                 }
+             })
+         });
+     </script>
+}
+
 

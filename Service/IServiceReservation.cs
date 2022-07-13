@@ -13,5 +13,6 @@ namespace BookingHotel_MVC.Service
         bool DeleteTempRoomForGuest(string id);
         int EditTempRoom(int id, ReservationRoomModel reservationRoomModel);
         ReservationRoomModel GetTempRoomByID(int id);
+        StatusResponse DeleteFromTempGuest(int id);
     }
 }

@@ -121,12 +121,27 @@ namespace BookingHotel_MVC.Controllers
         public IActionResult GetAllTempGuest()
         {
             string guestId = Request.Cookies["userId"];
-            var data = serviceReservation.GetAllTempForGuest(guestId);
-            if (data != null)
+            if (guestId != null)
             {
-                return View(data);
+
+
+                var data = serviceReservation.GetAllTempForGuest(guestId);
+                if (data != null)
+                {
+                    return View(data);
+                }
+                return BadRequest();
             }
-            return BadRequest();
+            return RedirectToAction("Login", "Account");
+        }
+        public IActionResult DeleteTempGuestRoom(int id)
+        {
+            var data = serviceReservation.DeleteFromTempGuest(id);
+                if(data.Status)
+            {
+                return Json(data);
+            }
+            return Json(data);
         }
     }
 }

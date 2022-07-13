@@ -30,10 +30,10 @@ namespace BookingHotel_MVC.Service
         }
         public ReservationRoomModel AddTempRoom(ReservationRoomModel model)
         {
-            httpClient.BaseAddress = new Uri(baseUrl);
+            //httpClient.BaseAddress = new Uri(baseUrl);
             httpClient.DefaultRequestHeaders.Accept.Add(
                 new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-            HttpResponseMessage httpResponse = httpClient.PostAsJsonAsync<ReservationRoomModel>("api/TempGuestRoom", model).Result;
+            HttpResponseMessage httpResponse = httpClient.PostAsJsonAsync<ReservationRoomModel>("https://localhost:7212/api/TempGuestRoom", model).Result;
             ReservationRoomModel tempGuestRoom = httpResponse.Content.ReadAsAsync<ReservationRoomModel>().Result;
             return tempGuestRoom;
         }
@@ -83,6 +83,16 @@ namespace BookingHotel_MVC.Service
             HttpResponseMessage httpResponse = httpClient.PutAsJsonAsync("api/TempGuestRoom?id=" + id, model).Result;
             int response = httpResponse.Content.ReadAsAsync<int>().Result;
             return response;
+        }
+
+        public StatusResponse DeleteFromTempGuest(int id)
+        {
+            httpClient.BaseAddress = new Uri(baseUrl);
+            httpClient.DefaultRequestHeaders.Accept.Add(
+                new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+            HttpResponseMessage httpResponse = httpClient.DeleteAsync("api/TempGuestRoom/DeleteTempRoomByID?id=" + id).Result;
+            StatusResponse response = httpResponse.Content.ReadAsAsync<StatusResponse>().Result;
+            return response;        
         }
     }
 }
